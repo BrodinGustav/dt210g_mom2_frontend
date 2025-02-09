@@ -1,3 +1,5 @@
+//Komponent hanterar enskilt todo-objekt
+
 import { Todo } from "../types/Todo";
 import { updateTodo, deleteTodo } from "../api/api";
 

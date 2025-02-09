@@ -4,8 +4,8 @@ import { useState } from "react";
 //Importerar funktionen createTodo från API-modulen för att skapa en ny todo
 import { createTodo } from "../api/api";
 
-//Importerar Todo-typen som definierar strukturen för ett todo-objekt
-import { Todo } from "../types/Todo";
+//Importera CreateTodo-typen för att undvika _id
+import { CreateTodo } from "../types/Todo";  
 
 //Definierar Props-gränssnittet. onTodoAdded är en funktion som anropas när en todo har lagts till
 interface Props {
@@ -18,6 +18,7 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
     //useState-hooks för att hålla reda på värdena för titel och beskrivning
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [status, setStatus] = useState("");
 
     //Hanterar submit
     const handleSubmit = async (e: React.FormEvent) => {
@@ -28,20 +29,20 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
         if (description.length > 200) return alert("Beskrivningen får max vara 200 tecken");
 
         // Skapa ett Todo-objekt enligt Todo-typen
-        const newTodo: Todo = {
+        const newTodo: CreateTodo = {
             title,
             description,
             status: "Ej påbörjad",
-            _id: "",  
         };
 
         //Skickar en API-begäran för att skapa en ny todo 
-        await createTodo( newTodo );
+        await createTodo(newTodo);
 
 
         //Återställer titel och beskrivning till tomma strängar efter skapandet
         setTitle("");
         setDescription("");
+        setStatus("");
 
         //Anropar onTodoAdded för att informera föräldrakomponenten om att en todo har lagts till
         onTodoAdded();
@@ -61,9 +62,15 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
             />
 
             <textarea
-                placeholder="Beskrivning (valfri)"
+                placeholder="Beskrivning"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)} // Uppdaterar state när användaren skriver i textområdet
+            />
+
+            <textarea
+                placeholder="Status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)} // Uppdaterar state när användaren skriver i textområdet
             />
 
             <button type="submit">Lägg till</button>

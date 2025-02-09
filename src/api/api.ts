@@ -2,7 +2,7 @@ import axios from "axios";
 import { Todo } from "../types/Todo";
 
 //Variabel för API-url
-const API_URL = "http://localhost:5000/todos";
+const API_URL = "http://localhost:3000/todos";
 
 
 //Hämtar alla todos

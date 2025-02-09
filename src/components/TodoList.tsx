@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getTodos } from "./api/api"; // Importerar API-funktion för att hämta todos
-import { Todo } from "./types/Todo"; // Importerar Todo-typen
+import { getTodos } from "../api/api"; // Importerar API-funktion för att hämta todos
+import { Todo } from "../types/Todo"; // Importerar Todo-typen
 
 const TodoList = () => {
   
@@ -21,7 +21,7 @@ const TodoList = () => {
     <div>
       <h2>Att göra-lista</h2>
       <ul>
-      //Renderar varje todo
+       {/* Renderar varje todos */}
         {todos.map((todo) => (
           <li key={todo._id}>{todo.title} - {todo.status}</li> 
         ))}
