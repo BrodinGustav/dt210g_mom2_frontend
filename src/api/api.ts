@@ -20,7 +20,7 @@ export const getTodos = async () => {
  */
 
 // Skapa en ny todo
-export const createTodo = async (todo: Omit<Todo, "id">): Promise<Todo> => {    //Utesluter "id"-fältet från Todo-typen
+export const createTodo = async (todo: Omit<Todo, "_id">): Promise<Todo> => {    //Utesluter "id"-fältet från Todo-typen
     const response = await axios.post<Todo>(API_URL, todo);
     return response.data;
   };
