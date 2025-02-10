@@ -50,7 +50,7 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
 
     return (
         // Formuläret för att skapa en ny todo
-        <form onSubmit={handleSubmit}>
+        <form className="input-container" onSubmit={handleSubmit}>
 
             <input
                 type="text"

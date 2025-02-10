@@ -1,9 +1,10 @@
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
+import "./App.css";
 
 function App() {
   return (
-    <div>
+    <div className="app-container">
       <h1>Att göra-lista</h1>
 
         {/* TodoForm-komponenten för att skapa nya todos. */}

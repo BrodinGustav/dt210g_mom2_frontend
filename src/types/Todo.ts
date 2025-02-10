@@ -1,5 +1,5 @@
 export interface Todo {
-    _id: string; //Gör ID valfritt
+    _id: string; 
     title: string;
     description?: string;
     status: "Ej påbörjad" | "Pågående" | "Avklarad";

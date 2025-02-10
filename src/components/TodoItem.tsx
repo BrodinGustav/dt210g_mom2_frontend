@@ -58,7 +58,7 @@ const TodoItem: React.FC<Props> = ({ todo, onTodoUpdated }) => {
 
 
        return (
-        <div>
+        <div className="form-container">
             {isEditing ? (
                 <div>
                     <input
