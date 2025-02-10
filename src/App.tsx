@@ -5,7 +5,7 @@ import "./App.css";
 function App() {
   return (
     <div className="app-container">
-      <h1>Att göra-lista</h1>
+      <h1>DT210G Moment 2</h1>
 
         {/* TodoForm-komponenten för att skapa nya todos. */}
       <TodoForm onTodoAdded={() => window.location.reload()} />
