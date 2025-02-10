@@ -23,7 +23,7 @@ const TodoList = () => {
       <ul>
        {/* Renderar varje todos */}
         {todos.map((todo) => (
-          <li key={todo._id}>{todo.title} - {todo.status}</li> 
+          <li key={todo._id}>{todo.title} - {todo.description} - {todo.status}</li> 
         ))}
       </ul>
     </div>

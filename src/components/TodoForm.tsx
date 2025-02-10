@@ -5,7 +5,7 @@ import { useState } from "react";
 import { createTodo } from "../api/api";
 
 //Importera CreateTodo-typen för att undvika _id
-import { CreateTodo } from "../types/Todo";  
+import { CreateTodo } from "../types/Todo";
 
 //Definierar Props-gränssnittet. onTodoAdded är en funktion som anropas när en todo har lagts till
 interface Props {
@@ -18,7 +18,7 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
     //useState-hooks för att hålla reda på värdena för titel och beskrivning
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState("Ej påbörjad");
 
     //Hanterar submit
     const handleSubmit = async (e: React.FormEvent) => {
@@ -42,7 +42,7 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
         //Återställer titel och beskrivning till tomma strängar efter skapandet
         setTitle("");
         setDescription("");
-        setStatus("");
+        setStatus("Ej påbörjad");
 
         //Anropar onTodoAdded för att informera föräldrakomponenten om att en todo har lagts till
         onTodoAdded();
@@ -56,8 +56,7 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
                 type="text"
                 placeholder="Titel"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)} //U
-                // ppdaterar state när användaren skriver i fältet
+                onChange={(e) => setTitle(e.target.value)} //Uppdaterar state när användaren skriver i fältet
                 required
             />
 
@@ -67,11 +66,13 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
                 onChange={(e) => setDescription(e.target.value)} // Uppdaterar state när användaren skriver i textområdet
             />
 
-            <textarea
-                placeholder="Status"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)} // Uppdaterar state när användaren skriver i textområdet
-            />
+
+            {/* Dropdown-meny för status */}
+            <select value={status} onChange={(e) => setStatus(e.target.value)}> 
+                <option value="Ej påbörjad">Ej påbörjad</option>
+                <option value="Pågående">Pågående</option>
+                <option value="Klar">Klar</option>
+            </select>
 
             <button type="submit">Lägg till</button>
         </form>
