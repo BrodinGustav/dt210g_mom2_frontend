@@ -23,9 +23,7 @@ const TodoItem: React.FC<Props> = ({ todo, onTodoUpdated }) => {
             "Ej påbörjad": "Pågående",
             "Pågående": "Avklarad",
             "Avklarad": "Ej påbörjad"
-        }
-
-        [newStatus as "Ej påbörjad" | "Pågående" | "Avklarad"];
+        } [newStatus];
 
         //Kontrollerar att nextStatus är en giltig status
         if (nextStatus !== "Ej påbörjad" && nextStatus !== "Pågående" && nextStatus !== "Avklarad") {
