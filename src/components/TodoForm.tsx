@@ -1,4 +1,4 @@
-//Importerar useState från React för att hantera lokal komponentstat
+//Importerar useState från React för att hantera lokal komponentstate
 import { useState } from "react";
 
 //Importerar funktionen createTodo från API-modulen för att skapa en ny todo
@@ -12,6 +12,9 @@ interface Props {
     onTodoAdded: () => void;
 }
 
+
+
+
 //Huvudkomponenten TodoForm, som tar funktionen onTodoAdded som prop
 const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
 
@@ -19,6 +22,9 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [status, setStatus] = useState("Ej påbörjad");
+
+
+
 
     //Hanterar submit
     const handleSubmit = async (e: React.FormEvent) => {
@@ -48,6 +54,10 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
         onTodoAdded();
     };
 
+    
+    
+    
+    
     return (
         // Formuläret för att skapa en ny todo
         <form className="input-container" onSubmit={handleSubmit}>
