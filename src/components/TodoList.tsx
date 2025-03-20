@@ -12,10 +12,43 @@ const TodoList = () => {
     fetchTodos();
   }, []);
 
+
+  //Simulering 
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  //State för error
+  const [error, setError] = useState<string | null>(null);
+
+  //State för laddning av API
+  const [loading, setLoading] = useState(false);
+
   //Hämtar todos
   const fetchTodos = async () => {
+    try {
+
+      //Vid fetch sätts loading till true
+      setLoading(true);
+
+      //Låter fetch ta 2 sekunder för visning av loading-state
+      await delay(2000);
+
     const todosFromApi = await getTodos();
+
+    //Kontroll om fetch fungerar
+    if(!todosFromApi) {
+      throw Error;
+
+    } else {
     setTodos(todosFromApi);
+    setError(null);           //Om data är satt till Todos-state så nollställs error-state
+  }
+  } catch(error) {
+    console.log(error);
+    setError("Något gick fel vid hämtning av poster. Var god försök igen.");
+  
+  } finally {
+    setLoading(false);
+  }
   };
 
   //Raderar todo
@@ -49,6 +82,17 @@ const TodoList = () => {
 return (
   <div>
     <h2>Att göra-lista</h2>
+
+  {/*Skriver ut felmeddelande via error-state*/}
+  {
+    error && <p style={{ color: 'red' }}>{error}</p>
+  }
+
+    {/*Skriver ut meddelande ang fetch via loading-state*/}
+  {
+    loading && <p>Laddar in todos...</p>
+  }
+
     <ul>
       {/* Renderar varje todos */}
       {todos.map((todo) => (
