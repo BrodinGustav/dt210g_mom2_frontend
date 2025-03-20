@@ -16,12 +16,18 @@ const TodoList = () => {
   //Simulering 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+
+
   //State för error
   const [error, setError] = useState<string | null>(null);
+
+
 
   //State för laddning av API
   const [loading, setLoading] = useState(false);
 
+
+  
   //Hämtar todos
   const fetchTodos = async () => {
     try {

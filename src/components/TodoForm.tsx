@@ -31,10 +31,7 @@ interface FormData {
 //Huvudkomponenten TodoForm, som tar funktionen onTodoAdded som prop
 const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
 
-    //useState-hooks för att hålla reda på värdena för titel och beskrivning
-    const [formData] = useState<FormData>({ title: "", description: "", status: "Ej påbörjad" });
-
-
+    //States för formulär
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [status, setStatus] = useState("Ej påbörjad");
@@ -47,18 +44,24 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
 
 
     //Funktion som validerar input innan formulär skickas
-    const validateForm = ((data: FormData) => {          
-        
+    const validateForm = ((data: FormData) => {
+
         //Lagrar error i objekt med interface ErrorsData
         const validationErrors: ErrorsData = {};
 
-        if (!data.title || data.title.length < 3) {
+        if (!data.title) {
+            validationErrors.title = "Titel får inte vara tom.";
+        } else if (data.title.length < 3) {
             validationErrors.title = "Titel måste vara minst 3 tecken långt.";
         }
 
-        if (data.description.length > 200) {
+        if (!data.description) {
+            validationErrors.description = "Beskrivning får inte vara tom.";
+        } else if (data.description.length > 200) {
             validationErrors.description = "Beskrivningen får max vara 200 tecken";
         }
+
+        console.log(validationErrors);
 
         //Returnerar samtliga error
         return validationErrors;
@@ -72,15 +75,21 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); //Förhindrar att sidan laddas om 
 
+        //Skapar ett tillfälligt objekt att validera input pga separata useState-hooks för input
+        const tempFormData: FormData = {
+            title,
+            description,
+            status
+        };
 
 
         //Skickar iväg datan som innehåller staten med de olika värdena för fälten inför validering
-        const validationErrors = validateForm(formData)
+        const validationErrors = validateForm(tempFormData)
 
         //Kontroll om error finns i validationErrors
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            
+
         } else {
             setErrors({});
         }
@@ -98,15 +107,18 @@ const TodoForm: React.FC<Props> = ({ onTodoAdded }) => {
         //Skickar en API-begäran för att skapa en ny todo 
         await createTodo(newTodo);
 
+        try {
 
-        //Återställer titel och beskrivning till tomma strängar efter skapandet
-        setTitle("");
-        setDescription("");
-        setStatus("Ej påbörjad");
+            //Återställer titel och beskrivning till tomma strängar efter skapandet
+            setTitle("");
+            setDescription("");
+            setStatus("Ej påbörjad");
 
-        //Anropar onTodoAdded för att informera föräldrakomponenten om att en todo har lagts till
-        onTodoAdded();
-    
+            //Anropar onTodoAdded för att informera föräldrakomponenten om att en todo har lagts till
+            onTodoAdded();
+        } catch (error) {
+            console.error("Fel vid skapande av Todo:", error);
+        }
     };
 
 
